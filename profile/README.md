@@ -1,5 +1,16 @@
 ## Velkommen til MOALGOAT's repositories👋
 
+--> link til postman
+--> lnik til idk
+
+For eksamensprojekt 2024 er følgende repositories relevante:
+Vault
+BrugerServiceSem4Proj
+AuctionService
+CatalogService4Sem
+AuthenticationSem4Proj
+BiddingService
+
 <!--
 
 **Here are some ideas to get you started:**
