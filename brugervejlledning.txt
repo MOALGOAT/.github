@@ -1,0 +1,289 @@
+Brugervejledning af Api endekald for et Docker Miljø
+
+
+1. User
+For at få adgang til systemet, og gøre brug af dens funktioner, skal der oprettes nogle users.
+
+1.1 add user (role 1) 
+Naviger ind på Userservice Collection, og vælg "Post AddUser". 
+den kalder "http://localhost:85/api/user", hvor den indsætter hvad der står i "body":
+ {
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "address": "",
+      "telephoneNumber": "",
+      "role": 0,
+      "username": "",
+      "password": ""
+    }
+
+sikrer dig at:" "role": 1, " - for at oprette en almindelig user.
+Dette skal udfyldes, husk at gemme på username og password til login.
+Herefter ville der blive dannet en JWT token, der gør dig gyldig til at lave Role 1 kald. 
+
+1.2 add user (role 2)
+Naviger ind på Userservice Collection, og vælg "Post AddUser". 
+den kalder "http://localhost:85/api/user", hvor den indsætter hvad der står i "body":
+ {
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "address": "",
+      "telephoneNumber": "",
+      "role": 0,
+      "username": "",
+      "password": ""
+    }
+
+sikrer dig at:" "role": 2, " - for at oprette en admin.
+Dette skal udfyldes, husk at gemme på username og password til login.
+Herefter ville der blive dannet en JWT token, der gør dig gyldig til at lave Role 2 kald. 
+1.3 add user (role 3)
+Naviger ind på Userservice Collection, og vælg "Post AddUser". 
+den kalder "http://localhost:85/api/user", hvor den indsætter hvad der står i "body":
+ {
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "address": "",
+      "telephoneNumber": "",
+      "role": 0,
+      "username": "",
+      "password": ""
+    }
+
+sikrer dig at:" "role": 3, " - for at oprette en legal bruger.
+Dette skal udfyldes, husk at gemme på username og password til login.
+Herefter ville der blive dannet en JWT token, der gør dig gyldig til at lave Role 3 kald.
+
+2. Login
+
+2.1 login user
+naviger ind på AuthenticationService Collection, og vælg "Post LoginUser". 
+den kalder "http://localhost:85/authentication/loginuser", og validerer om hvad der står i "body", findes på databasen. 
+{
+    "username": "",
+    "password": ""
+}
+
+Her udfyldes username og password for en user med " "role": 1 ". 
+Hvis en user med disse parametre findes, vil der blive udstedt en JWT token, som vil blive sat i en miljøvariabel.
+denne miljøvariabel skulle gerne blive automatisk registreret i de andre services. 
+Hvis den ikke bliver automatisk sat, så login igen - kopier Token fra "Response". 
+når token er kopieret, naviger ind til næste kald, og under "auth", vælg "Bearer Token" og indsæt din JWT token her.
+
+2.2 login admin 
+naviger ind på AuthenticationService Collection, og vælg "Post LoginAdmin". 
+den kalder "http://localhost:85/authentication/loginadmin", og validerer om hvad der står i "body", findes på databasen. 
+{
+    "username": "",
+    "password": ""
+}
+
+Her udfyldes username og password for en user med " "role": 2 ". 
+Hvis en user med disse parametre findes, vil der blive udstedt en JWT token, som vil blive sat i en miljøvariabel.
+denne miljøvariabel skulle gerne blive automatisk registreret i de andre services. 
+Hvis den ikke bliver automatisk sat, så login igen - kopier Token fra "Response". 
+når token er kopieret, naviger ind til næste kald, og under "auth", vælg "Bearer Token" og indsæt din JWT token her.
+
+2.3 login legal
+naviger ind på Legal Collection, og vælg "Post Legal Login". 
+den kalder "http://localhost:85/api/legal/login", og validerer om hvad der står i "body", findes på databasen. 
+{
+    "username": "",
+    "password": ""
+}
+
+Her udfyldes username og password for en user med " "role": 3 ". 
+Hvis en user med disse parametre findes, vil der blive udstedt en JWT token, som vil blive sat i en miljøvariabel.
+denne miljøvariabel skulle gerne blive automatisk registreret i de andre services. 
+Hvis den ikke bliver automatisk sat, så login igen - kopier Token fra "Response". 
+når token er kopieret, naviger ind til næste kald, og under "auth", vælg "Bearer Token" og indsæt din JWT token her.
+
+
+3. Catalog
+
+For at poste på Catalog, skal man være logget ind med en admin (role 2). 
+
+3.1 add Catalog
+for at tilføje et item til catalog, naviger ind på CatalogService Collection, vælg "post AddCatalog".
+den kalder på "http://localhost:85/api/catalog", og poster hvad der står i "body":
+{
+  "title": "",
+  "description": "",
+  "category": "",
+  "startingPrice": 0,
+  "status": ""
+}
+Når "body" er blevet udfyldt med et item, trykkes der på "send", og item vil blive sendt til databasen, og tildelt et "_id".
+ 
+3.2 get Catalog list
+For at kalde en liste af items, naviger ind på CatalogService Collection, vælg "get GetCatalogList".
+den kalder på "http://localhost:85/api/catalog".
+Her skulle der gerne returneres en liste af Items fra Catalog. 
+
+3.3 get Catalog(_id)
+For at kalde en bestemt Item, naviger ind på CatalogService Collection, vælg "get GetCatalog". 
+den kalder på "http://localhost:85/api/catalog/{_id}".
+Her skal der i URL'en indsættes et _id fra et item, ind i {_id} for at det bestemte item. 
+
+3.4 update Catalog 
+For at opdatere data omkring et bestemt item, naviger ind på CatalogService Collection, vælg "put UpdateCatalog".
+den kalder på "http://localhost:85/api/catalog/{_id}" med denne body:
+
+{
+        "_id": "",
+        "title": "",
+        "description": "",
+        "category": "",
+        "startingPrice": 0,
+        "status": ""
+    }
+
+her skal der indsættes et Item samt dens "_id", og i URL'en skal der også indsættes et "_id". 
+I body kan man så ændre i data vedrørende dette item. 
+
+
+3.5 delete Catalog 
+for at slette et item fra Catalog, naviger ind på CatalogService Collection, vælg "del DeleteCatalog". 
+den kalder på "http://localhost:85/api/catalog/{_id}". 
+Her skal der indsættes et vilkårligt "_id", på den varer der skal slettes. 
+
+
+4. Auction 
+
+4.1 Post Auction
+for at kunne tilføje en Auction, skal man være logget ind som en admin (role 2).
+naviger ind på AuctionService Collection, vælg "POST Addauction". 
+den kalder på "http://localhost:85/api/auction" med dens "body": 
+{
+    "item": {
+        "_id": "",
+        "title": "",
+        "description": "",
+        "category": "",
+        "startingPrice": 0,
+        "status": ""
+    },
+    "startTime": "2024-06-20T08:00:00Z",
+    "endTime": "2024-06-20T08:00:00Z",
+    "bids": [
+    ],
+    "seller": {
+        "username": ""
+    }
+}
+Her skal der indsættes et item fra Catalog, en startTime og endTime og et username fra User.  
+
+4.2 Get Auction List
+for at hente en liste af Auctions, naviger ind på AuctionService Collection og vælg "GET GetAuctionList". 
+I dette kald kan både role 1 og 2 kalde. 
+den kalder på "http://localhost:85/api/auction". 
+dette skulle returnere en liste af auctions. 
+
+4.3 Get Auction _id
+or at hente en bestemt Auction, naviger ind på AuctionService Collection og vælg "GET GetAuction". 
+I dette kald kan både role 1 og 2 kalde.
+den kalder på "http://localhost:85/api/auction/{_id}". 
+Her indsættes "_id" på den bestemte Auction der skal hentes.
+
+4.4 Update auction
+for at kunne opdatere en Auction, naviger ind på AuctionService Collection og vælg "PUT UpdateAuction". 
+Her skal man være logget ind som en admin med role 2. 
+den kalder på "http://localhost:85/api/auction/{_id}" med body:
+{
+        "_id": "",
+        "item": {
+            "_id": "",
+            "title": "",
+            "description": "",
+            "category": "",
+            "startingPrice": 0,
+            "status": ""
+        },
+        "startTime": "2024-06-20T08:00:00Z",
+        "endTime": "2024-06-20T08:00:00Z",
+        "bids": [],
+        "seller": {
+            "_id": "",
+            "username": ""
+        },
+        "auctionId": ""
+    }
+
+Her udfyldes "_id" samt eventuelle ændringer. 
+
+
+4.5 Delete Auction 
+For at kunne slette en Auction skal man være logget ind som Admin (role 2). naviger ind på AuctionService Collection og vælg "DEL DeleteAuction". 
+den kalder på "http://localhost:85/api/auction/{_id}". 
+her indsættes et "_id", fra den Auction der skal slettes, ind på "{_id}". 
+
+
+5. UserService
+Disse kald kan kun anvendes hvis man er logget ind som en admin (role 2). 
+
+5.1 Get User
+for at kalde en bestemt user ud fra "_id", naviger ind på UserService Collection, og vælg "GET GetUser". 
+denne kalder på "http://localhost:85/api/user/{_id}". 
+Her indsættes "_id" fra Useren, ind på "{_id}". 
+
+5.2 Get user List
+For at kalde en liste af Users, naviger ind på UserService Collection og vælg "GET GetUserList". 
+Den kalder på "http://localhost:85/api/user". 
+dette returnere en liste af Users. 
+
+5.3 Delete user
+For at slette en user, naviger ind på UserService Collection og vælg "DEL DeleteUser". 
+den kalder på "http://localhost:85/api/user/{_id}". 
+Her indsættes et "_id" fra den user der skal slettes, på "{_id}". 
+
+5.4 Update user
+For at opdatere en user, naviger ind på UserService Collection og vælg "PUT UpdateUser". 
+den kalder på "http://localhost:85/api/user/{_id}" med "body": 
+{
+    "_id": "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "adress": "",
+    "telephonenumber": "",
+    "role": 0,
+    "username": "",
+    "password": "",
+    "created_at": ""
+}
+Her indsættes data fra en User, hvor man kan ændre i den vilkårlige data. 
+
+
+6. Legal
+Disse kald er en del af en interoperabilitetskontrakt. 
+
+6.1 Legal Auction List
+for at kalde en liste af Auctions, naviger ind på Legal Collection, og vælg "GET Legal AuctionList". 
+den kalder på "http://localhost:85/api/legal/auctions". 
+dette skulle gerne returnere en liste, med de givne værdier i interoperabiliteteskontrakten. 
+
+6.2 Legal Auction _id
+for at kalde en bestemt auction ud fra "_id", naviger ind på Legal Collection og vælg "GET Legal Auction{_id}. 
+den kalder på "http://localhost:85/api/legal/auctions/{_id}". 
+her indsættes et "_id" fra en bestemt auction på "{_id}". 
+
+6.3 Legal User _id 
+for at kalde en bestemt User, naviger ind på Legal Collection og vælg "GET Legal UserId". 
+den kalder på "http://localhost:85/api/legal/users/{_id}". 
+Her indsættes et "_id" fra en bestemt User på "{_id}". 
+ 
+7. Bid
+
+for at tilføje et bid på en auction, naviger ind på BiddingService Collection og vælg "Post AddBid". 
+den kalder på "http://localhost:85/api/bidding" med body:
+
+{
+    "bidPrice": 0,
+    "auctionId": ""
+}
+
+her indsættes et vilkårligt bud, samt et "auctionId" fra en Auction. Der vil blive tilføjet et "username" fra den 
+JWT token man har logget ind med. 
