@@ -4,7 +4,7 @@ Links:
 - Postman: https://www.postman.com/lunar-station-289020/workspace/sem4proj
 - Brugervejledning: ligger inde på .github under "brugervejledning.txt"
 
-For eksamensprojekt 2024 er følgende repositories relevante:
+**For eksamensprojekt 2024 er følgende repositories relevante:**
 - Vault
 - BrugerServiceSem4Proj
 - AuctionService 
