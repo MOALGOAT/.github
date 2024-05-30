@@ -6,7 +6,7 @@
 For eksamensprojekt 2024 er følgende repositories relevante:
 Vault
 BrugerServiceSem4Proj
-AuctionService
+AuctionService [Markdown]
 CatalogService4Sem
 AuthenticationSem4Proj
 BiddingService
